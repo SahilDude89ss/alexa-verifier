@@ -1,6 +1,7 @@
 'use strict'
 
-var https = require('https')
+var https           = require('https');
+var HttpsProxyAgent = require('https-proxy-agent');
 
 
 var globalCache = {} // default in-memory cache for downloaded certificates
@@ -16,9 +17,26 @@ module.exports = function fetchCert (options, callback) {
     return
   }
 
-  var body = ''
+  var body = '', request = url.href;
+  if(options.proxy_url) {
+    request = {
+      protocol: 'https:',
+      slashes: true,
+      auth: null,
+      host: options.url.host,
+      port: null,
+      hostname: options.url.host,
+      hash: null,
+      search: null,
+      query: null,
+      pathname: options.url.path,
+      path: options.url.path,
+      href: options.url.href,
+      agent: new HttpsProxyAgent(options.proxy_url)
+    };
+  }
 
-  https.get(url.href, function (response) {
+  https.get(request, function (response) {
     var statusCode
 
     if (!response || 200 !== response.statusCode) {
