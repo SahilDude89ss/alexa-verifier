@@ -1,11 +1,11 @@
 {
-  "name": "alexa-verifier",
-  "version": "2.0.1",
-  "description": "Verify HTTP requests sent to an Alexa skill are sent from Amazon",
+  "name": "alexa-verifier-with-proxy",
+  "version": "1.0.1",
+  "description": "Verify HTTP requests sent to an Alexa skill are sent from Amazon with a PROXY if available.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mreinstein/alexa-verifier.git"
+    "url": "https://github.com/sahildude89ss/alexa-verifier.git"
   },
   "keywords": [
     "alexa",
@@ -17,9 +17,10 @@
   "scripts": {
     "test": "tap ./test"
   },
-  "author": "Mike Reinstein",
+  "author": "Sahil Sharma",
   "license": "MIT",
   "dependencies": {
+    "https-proxy-agent": "^2.2.1",
     "node-forge": "^0.7.0",
     "validator": "^9.0.0"
   },

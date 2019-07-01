@@ -13,7 +13,7 @@ var TIMESTAMP_TOLERANCE = 150
 var SIGNATURE_FORMAT = 'base64'
 
 function getCert (cert_url, callback) {
-  var options = { url: url.parse(cert_url) }
+  var options = { url: url.parse(cert_url), proxy_url: process.env.ALEXA_VERIFIER_PROXY_URL || null }
   var result = validateCertUri(options.url)
   if (result !== true)
     return process.nextTick(callback, result)
@@ -99,10 +99,10 @@ module.exports = function (cert_url, signature, requestBody, cb) {
     return verifier(cert_url, signature, requestBody, cb)
 
   return new Promise(function( resolve, reject) {
-     verifier(cert_url, signature, requestBody, function(er) {
-        if(er)
-          return reject(er)
-        resolve()
-     })
+    verifier(cert_url, signature, requestBody, function(er) {
+      if(er)
+        return reject(er)
+      resolve()
+    })
   })
 }
