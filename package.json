@@ -1,6 +1,6 @@
 {
   "name": "alexa-verifier-with-proxy",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Verify HTTP requests sent to an Alexa skill are sent from Amazon with a PROXY if available.",
   "main": "index.js",
   "repository": {
