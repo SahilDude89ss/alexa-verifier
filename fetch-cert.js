@@ -20,15 +20,10 @@ module.exports = function fetchCert (options, callback) {
   var body = '', request = url.href;
   if(options.proxy_url) {
     request = {
-      protocol: 'https:',
+      protocol: 'https', // Make sure, we check this based on the actual URL
       slashes: true,
-      auth: null,
       host: options.url.host,
-      port: null,
       hostname: options.url.host,
-      hash: null,
-      search: null,
-      query: null,
       pathname: options.url.path,
       path: options.url.path,
       href: options.url.href,
