@@ -6,9 +6,6 @@ var url             = require('url')
 var validateCert    = require('./validate-cert')
 var validateCertUri = require('./validate-cert-uri')
 var validator       = require('validator')
-var config = {
-  proxy_url: null
-}
 
 
 // constants
@@ -16,7 +13,7 @@ var TIMESTAMP_TOLERANCE = 150
 var SIGNATURE_FORMAT = 'base64'
 
 function getCert (cert_url, callback) {
-  var options = { url: url.parse(cert_url), proxy_url: config.proxy_url }
+  var options = { url: url.parse(cert_url), proxy_url: process.env.ALEXA_VERIFIER_PROXY_URL || null }
   var result = validateCertUri(options.url)
   if (result !== true)
     return process.nextTick(callback, result)
@@ -95,24 +92,17 @@ function verifier (cert_url, signature, requestBody, callback) {
   })
 }
 
-// certificate validator for amazon echo
-module.exports = {
-  verifier: function (cert_url, signature, requestBody, cb) {
-    if(cb)
-      return verifier(cert_url, signature, requestBody, cb)
 
-    return new Promise(function( resolve, reject) {
-      verifier(cert_url, signature, requestBody, function(er) {
-        if(er)
-          return reject(er)
-        resolve()
-      })
+// certificate validator for amazon echo
+module.exports = function (cert_url, signature, requestBody, cb) {
+  if(cb)
+    return verifier(cert_url, signature, requestBody, cb)
+
+  return new Promise(function( resolve, reject) {
+    verifier(cert_url, signature, requestBody, function(er) {
+      if(er)
+        return reject(er)
+      resolve()
     })
-  },
-  init: function (userConfig) {
-    userConfig = userConfig || {};
-    for(var _key in userConfig) {
-      config[_key] = userConfig[_key]
-    }
-  }
-};
+  })
+}
