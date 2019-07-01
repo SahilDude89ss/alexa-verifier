@@ -6,4 +6,9 @@ added when fetching the cert. Set the environment variable to ALEXA_VERIFIER_PRO
 process.env.ALEXA_VERIFIER_PROXY_URL={PROXY_URL}
 ```
 
+## Install
+```bash
+npm i alexa-verifier-with-proxy
+```
+
 Original Documentation: [https://github.com/mreinstein/alexa-verifier/blob/master/README.md] 
