@@ -3,7 +3,6 @@
 var https           = require('https');
 var HttpsProxyAgent = require('https-proxy-agent');
 
-
 var globalCache = {} // default in-memory cache for downloaded certificates
 
 module.exports = function fetchCert (options, callback) {
